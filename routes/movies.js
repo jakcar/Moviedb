@@ -108,10 +108,10 @@ movies.get('/moviesbyactor/', (req, res) => {
     FROM titles
     JOIN actors_titles ON titles.id = actors_titles.title_id
     JOIN actors ON actors.id = actors_titles.actor_id
-    WHERE CONCAT(actors.firstname, ' ', actors.lastName) = '${actorName}'`
+    WHERE CONCAT(actors.firstname, ' ', actors.lastName) = ?`
 
     pool((err, connection) => {
-        connection.query(query, (err, result, fields) => {
+        connection.query(query, actorName, (err, result, fields) => {
             connection.release()
 
             if (err) throw err

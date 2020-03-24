@@ -110,10 +110,10 @@ actors.get('/actorsbymovie/', (req, res) => {
     FROM titles
     JOIN actors_titles ON titles.id = actors_titles.title_id
     JOIN actors ON actors.id = actors_titles.actor_id
-    WHERE titles.title = '${movieTitle}'`
+    WHERE titles.title = ?`
 
     pool((err, connection) => {
-        connection.query(query, (err, result, fields) => {
+        connection.query(query, movieTitle, (err, result, fields) => {
             connection.release()
 
             if (err) throw err
